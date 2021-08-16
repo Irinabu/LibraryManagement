@@ -4,22 +4,38 @@ import java.util.ArrayList;
 public class DataBase {
 
     String nameOfTable;
+    Connection connection;
+    Statement statement;
+    ResultSet resultSet;
 
-public ArrayList<Librarian> listOfLibrarians() {
+    public DataBase(){
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/usersdb", "root", "Irina*Burada*10*");
+            statement = connection.createStatement();
+
+
+        }catch(Exception e){
+
+            System.out.println(e);
+
+        }
+
+
+    }
+
+    public ArrayList<Librarian> listOfLibrarians() {
 
     ArrayList<Librarian> librarianArrayList = new ArrayList<>();
     try {
 
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/usersdb", "root", "Irina*Burada*10*");
-        Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery("select * from librarian");
-
-        while (rs.next()) {
-            Librarian a = new Librarian(rs.getString(2), rs.getString(3),rs.getInt(4), rs.getString(5), rs.getString(6));
+        resultSet = statement.executeQuery("select * from librarian");
+        while (resultSet.next()) {
+            Librarian a = new Librarian(resultSet.getString(2), resultSet.getString(3),resultSet.getInt(4), resultSet.getString(5), resultSet.getString(6));
             librarianArrayList.add(a);
         }
-        con.close();
+        connection.close();
 
 
     }catch(Exception e){
@@ -28,6 +44,28 @@ public ArrayList<Librarian> listOfLibrarians() {
     }
 
     return librarianArrayList;
+}
+
+public ArrayList<Book> listOfBooks(){
+
+    ArrayList<Book> bookArrayList = new ArrayList<>();
+    try {
+
+        resultSet = statement.executeQuery("select * from book");
+        while (resultSet.next()) {
+            Book b = new Book(resultSet.getString(3), resultSet.getString(2),resultSet.getString(4), resultSet.getInt(5));
+            bookArrayList.add(b);
+        }
+        connection.close();
+
+
+    }catch(Exception e){
+        System.out.println(e);
+
+    }
+
+    return bookArrayList;
+
 }
 
 }

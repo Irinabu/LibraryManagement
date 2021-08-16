@@ -103,6 +103,7 @@ public class Window {
         w.mainFrame.setSize(400,400);
         w.mainFrame.setLayout(new GridLayout(3,1));
         w.header = new JLabel("Salutare", SwingConstants.CENTER);
+
         w.mainFrame.setLocationRelativeTo(null);
 
         w.mainFrame.addWindowListener(new WindowAdapter() {
@@ -115,6 +116,7 @@ public class Window {
 
         w.mainPanel = new JPanel();
         w.mainPanel.setLayout(new FlowLayout());
+
 
         w.mainFrame.add(w.header);
         w.mainFrame.add(w.mainPanel);
@@ -131,6 +133,59 @@ public class Window {
         JButton b2 = new JButton("Rent a book");
         JButton b3 = new JButton("Log out");
 
+        DataBase b = new DataBase();
+
+        ArrayList<Book> l = b.listOfBooks();
+
+        b1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Window f1 = new Window();
+                prepareFrame(f1);
+
+                f1.header.setText("Type the name of the book");
+
+                f1.text = new JTextField();
+                f1.text.setBounds(10,10,300,20);
+                f1.text.setLocation(50, 110);
+                f1.text.setPreferredSize(new Dimension(300, 20));
+                f1.mainPanel.add(f1.text);
+
+
+                f1.text.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String name = f1.text.getText();
+                        System.out.println(name);
+
+                        boolean foundB = false;
+
+                        for(int i = 0; i < l.size() && !foundB; i ++)
+                            if(name.equals(l.get(i).title))
+                            {
+                                if(l.get(i).availableNumber >= 1) {
+                                    foundB = true;
+                                    l.get(i).availableNumber--;
+                                    System.out.println(l.get(i));
+                                    JOptionPane.showMessageDialog(null, "Imprumut realizat cu succes");
+                                    f1.mainFrame.setVisible(false);
+                                    w.mainFrame.setVisible(true);
+                                }
+                                else
+                                {
+                                    JOptionPane.showMessageDialog(null, "Nu mai sunt carti disponibile");
+
+                                }
+
+                            }
+                            else{
+                                JOptionPane.showMessageDialog(null, "Nume gresit sau carte inexistenta in sistem");
+                            }
+                    }
+                });
+
+            }
+        });
         w.mainPanel.add(b1);
         w.mainPanel.add(b2);
         w.mainPanel.add(b3);
