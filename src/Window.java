@@ -67,11 +67,14 @@ public class Window {
                                         foundP = true;
                                         mainFrame.setVisible(false);
 
-                                        prepareFrame(w);
-                                        showOptions(w);
+                                        //
+                                        Window W = new Window();
+                                        prepareFrame(W);
+                                        showOptions(W);
 
 
                                     }
+
                                 if(foundP == false){
                                     JOptionPane.showMessageDialog(null, "Parola incorecta, incearca din nou");
                                 }
@@ -98,6 +101,7 @@ public class Window {
     }
 
     public void prepareFrame(Window w){
+
         w.mainFrame = new JFrame("Login");
         w.mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         w.mainFrame.setSize(400,400);
@@ -125,6 +129,7 @@ public class Window {
 
     }
 
+
     public void showOptions(Window w){
 
         w.header.setText("What do you want to do?");
@@ -136,11 +141,12 @@ public class Window {
         DataBase b = new DataBase();
 
         ArrayList<Book> l = b.listOfBooks();
+        Window f1 = new Window();
 
         b1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Window f1 = new Window();
+
                 prepareFrame(f1);
 
                 f1.header.setText("Type the name of the book");
@@ -186,6 +192,66 @@ public class Window {
 
             }
         });
+
+
+        b2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                prepareFrame(f1);
+
+                f1.header.setText("Type the name of the book");
+
+                f1.text = new JTextField();
+                f1.text.setBounds(10,10,300,20);
+                f1.text.setLocation(50, 110);
+                f1.text.setPreferredSize(new Dimension(300, 20));
+                f1.mainPanel.add(f1.text);
+
+
+                f1.text.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String name = f1.text.getText();
+                        System.out.println(name);
+
+                        boolean foundB = false;
+
+                        for(int i = 0; i < l.size() && !foundB; i ++)
+                            if(name.equals(l.get(i).title))
+                            {
+
+                                    foundB = true;
+                                    l.get(i).availableNumber++;
+                                    System.out.println(l.get(i));
+                                    JOptionPane.showMessageDialog(null, "Returnare realizata cu succes");
+                                    f1.mainFrame.setVisible(false);
+                                    w.mainFrame.setVisible(true);
+
+
+                            }
+                            else{
+                                JOptionPane.showMessageDialog(null, "Nume gresit sau carte inexistenta in sistem");
+                            }
+                    }
+                });
+
+            }
+        });
+
+        b3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                w.mainFrame.setVisible(false);
+                email.setText("type the email");
+                password.setText("type the password");
+
+                mainFrame.setVisible(true);
+
+
+            }
+        });
+
         w.mainPanel.add(b1);
         w.mainPanel.add(b2);
         w.mainPanel.add(b3);
@@ -227,9 +293,6 @@ public class Window {
 
             }
         });
-
-
-
     }
 
 }
