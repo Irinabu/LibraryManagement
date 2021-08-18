@@ -19,14 +19,14 @@ public class Window {
 
     }
 
-    public void Login(Window w){
+    public void Login(Window w) {
 
         email = new JTextField("type your email");
-        email.setBounds(10,10,120,20);
-        email.setLocation(50,70);
+        email.setBounds(10, 10, 120, 20);
+        email.setLocation(50, 70);
 
         password = new JTextField("type your password");
-        password.setBounds(10,10,120,20);
+        password.setBounds(10, 10, 120, 20);
         password.setLocation(50, 110);
 
         mainFrame.setVisible(false);
@@ -37,6 +37,9 @@ public class Window {
 
         mainPanel.add(email);
         mainPanel.add(password);
+    }
+
+    void LoginLibrarian(Window w){
 
         DataBase b = new DataBase();
 
@@ -49,10 +52,79 @@ public class Window {
 
                 //check if the email is valid
 
+                    boolean foundE = false;
+                    for (int i = 0; i < l.size() && !foundE; i++)
+                        if (emailText.equals(l.get(i).email)) {
+                            System.out.println(l.get(i).firstName + " " + l.get(i).lastName);
+
+                            foundE = true;
+
+                            password.addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    String passwordText = password.getText();
+                                    boolean foundP = false;
+                                    for (int i = 0; i < l.size() && foundP == false; i++)
+                                        if (passwordText.equals(l.get(i).password)) {
+
+                                            foundP = true;
+                                            mainFrame.setVisible(false);
+
+
+                                            Window W = new Window();
+                                            prepareFrame(W);
+                                            showOptionsLib(W);
+
+
+                                        }
+
+                                    if (foundP == false) {
+                                        JOptionPane.showMessageDialog(null, "Parola incorecta, incearca din nou");
+                                    }
+
+                                }
+
+
+                            });
+
+
+                        }
+
+
+                        if (foundE == false) {
+                            JOptionPane.showMessageDialog(null, "Email invalid, incearca din nou");
+                        }
+
+
+
+
+            }
+
+        });
+
+
+
+        mainFrame.setVisible(true);
+    }
+
+    void LoginAdmin(Window w){
+
+        DataBase b = new DataBase();
+
+        ArrayList<Admin> L = b.listOfAdmins();
+
+        email.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String emailText = email.getText();
+
+                //check if the email is valid
+
                 boolean foundE = false;
-                for(int i = 0; i < l.size() && !foundE; i ++)
-                    if(emailText.equals(l.get(i).email)){
-                        System.out.println(l.get(i).firstName + " " + l.get(i).lastName);
+                for (int i = 0; i < L.size() && !foundE; i++)
+
+                    if (emailText.equals(L.get(i).email)) {
+                        System.out.println(L.get(i).firstName + " " + L.get(i).lastName);
 
                         foundE = true;
 
@@ -61,32 +133,34 @@ public class Window {
                             public void actionPerformed(ActionEvent e) {
                                 String passwordText = password.getText();
                                 boolean foundP = false;
-                                for(int i = 0; i < l.size() && foundP == false; i ++)
-                                    if(passwordText.equals(l.get(i).password)){
+                                for (int i = 0; i < L.size() && foundP == false; i++)
+                                    if (passwordText.equals(L.get(i).password)) {
 
                                         foundP = true;
                                         mainFrame.setVisible(false);
 
-                                        //
+
                                         Window W = new Window();
                                         prepareFrame(W);
-                                        showOptions(W);
+                                        showOptionsAdm(W);
 
 
                                     }
 
-                                if(foundP == false){
+                                if (foundP == false) {
                                     JOptionPane.showMessageDialog(null, "Parola incorecta, incearca din nou");
                                 }
 
                             }
+
 
                         });
 
 
                     }
 
-                if(foundE == false){
+
+                if (foundE == false) {
                     JOptionPane.showMessageDialog(null, "Email invalid, incearca din nou");
                 }
 
@@ -99,6 +173,8 @@ public class Window {
 
         mainFrame.setVisible(true);
     }
+
+
 
     public void prepareFrame(Window w){
 
@@ -130,7 +206,7 @@ public class Window {
     }
 
 
-    public void showOptions(Window w){
+    public void showOptionsLib(Window w){
 
         w.header.setText("What do you want to do?");
 
@@ -260,6 +336,12 @@ public class Window {
 
     }
 
+    void showOptionsAdm(Window w){
+
+
+
+    }
+
     public void showButtons(){
 
         header.setText("Choose your status");
@@ -289,6 +371,7 @@ public class Window {
 
                 mainFrame.setVisible(false);
                 LibrarianWindow wL = new LibrarianWindow();
+
 
 
             }

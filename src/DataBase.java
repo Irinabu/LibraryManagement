@@ -46,6 +46,28 @@ public class DataBase {
     return librarianArrayList;
 }
 
+    public ArrayList<Admin> listOfAdmins() {
+
+        ArrayList<Admin> adminArrayList = new ArrayList<>();
+        try {
+
+            resultSet = statement.executeQuery("select * from admin");
+            while (resultSet.next()) {
+
+                Admin a = new Admin(resultSet.getInt(1), resultSet.getString(2),resultSet.getString(3), resultSet.getString(4), resultSet.getString(5));
+                adminArrayList.add(a);
+            }
+            connection.close();
+
+
+        }catch(Exception e){
+            System.out.println(e);
+
+        }
+
+        return adminArrayList;
+    }
+
 public ArrayList<Book> listOfBooks(){
 
     ArrayList<Book> bookArrayList = new ArrayList<>();

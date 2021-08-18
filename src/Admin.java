@@ -1,7 +1,9 @@
 public class Admin extends User{
     int adminId;
 
-    public Admin(String fname, String lname, String _email, String _password){
+    public Admin(int _adminId, String fname, String lname, String _email, String _password){
+
+        adminId = _adminId;
         firstName = fname;
         lastName = lname;
         email = _email;
@@ -9,6 +11,9 @@ public class Admin extends User{
 
     }
 
+    public String toString(){
+        return (firstName + " " + lastName + " " );
+    }
     public void addLibrarian(){
 
     }

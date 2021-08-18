@@ -27,6 +27,7 @@ public class LibrarianWindow extends Window {
         mainFrame.setLocationRelativeTo(null);
 
         Login(this);
+        LoginLibrarian(this);
 
 
     }

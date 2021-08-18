@@ -26,6 +26,8 @@ public class AdminWindow extends Window{
         mainFrame.setSize(300,300);
         mainFrame.setLocationRelativeTo(null);
         Login(this);
+        LoginAdmin(this);
+
 
     }
 }
