@@ -13,6 +13,7 @@ public class Window {
     public JTextField text;
 
 
+
     public void init() {
         prepareFrame(this);
         showButtons();
@@ -209,7 +210,7 @@ public class Window {
     public void showOptionsLib(Window w){
 
         w.header.setText("What do you want to do?");
-
+        w.mainFrame.setTitle("Librarian Options");
         JButton b1 = new JButton("Borrow a book");
         JButton b2 = new JButton("Rent a book");
         JButton b3 = new JButton("Log out");
@@ -218,6 +219,7 @@ public class Window {
 
         ArrayList<Book> l = b.listOfBooks();
         Window f1 = new Window();
+
 
         b1.addActionListener(new ActionListener() {
             @Override
@@ -338,8 +340,71 @@ public class Window {
 
     void showOptionsAdm(Window w){
 
+        w.header.setText("What do you want to do?");
+        w.mainFrame.setTitle("Admin Options");
+
+        JButton b1 = new JButton("Remove a librarian");
+
+        Librarian lib = new Librarian();
+
+        DataBase b = new DataBase();
+
+        Window f2 = new Window();
+        prepareFrame(f2);
+
+        b1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                w.mainFrame.setVisible(false);
+                f2.header.setText("Introdu datele: ");
+                JTextField fname = new JTextField("type the first name");
+                fname.setBounds(50, 20, 200,20);
+                fname.setPreferredSize(new Dimension(200,20));
+                fname.setLocation(50, 20);
+
+                String name, lastname;
+                fname.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        lib.firstName = fname.getText();
+                        System.out.println(lib.firstName);
+                    }
+                });
+
+                JTextField lname = new JTextField("type the last name");
+                lname.setBounds(50, 50, 200,20);
+                lname.setPreferredSize(new Dimension(200,20));
+                lname.setLocation(50, 70);
 
 
+                lname.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        lib.lastName = lname.getText();
+                        System.out.println(lib.lastName);
+                        b.RemoveLibrarian(lib.firstName, lib.lastName);
+
+
+                    }
+                });
+
+
+                f2.mainPanel.setLayout(null);
+                f2.mainPanel.add(fname);
+                f2.mainPanel.add(lname);
+
+                f2.mainFrame.setVisible(true);
+
+
+
+            }
+        });
+
+
+        w.mainPanel.add(b1);
+
+        w.mainFrame.setVisible(true);
     }
 
     public void showButtons(){

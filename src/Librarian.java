@@ -1,6 +1,7 @@
 public class Librarian extends User{
     int borrowedBooks;
 
+    public Librarian(){};
     public Librarian(String fname, String lname, int books, String _email, String _password) {
         firstName = fname;
         lastName = lname;

@@ -6,6 +6,7 @@ public class DataBase {
     String nameOfTable;
     Connection connection;
     Statement statement;
+    PreparedStatement preparedStatement;
     ResultSet resultSet;
 
     public DataBase(){
@@ -68,7 +69,7 @@ public class DataBase {
         return adminArrayList;
     }
 
-public ArrayList<Book> listOfBooks(){
+    public ArrayList<Book> listOfBooks(){
 
     ArrayList<Book> bookArrayList = new ArrayList<>();
     try {
@@ -88,6 +89,30 @@ public ArrayList<Book> listOfBooks(){
 
     return bookArrayList;
 
-}
+    }
 
+    public void RemoveLibrarian(String fname, String lname){
+
+        String query = "delete from librarian where firstName = ?";
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/usersdb", "root", "Irina*Burada*10*");
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+
+            stmt.setString(1, fname);
+
+
+
+            stmt.executeUpdate();
+
+            System.out.println("deleted with success");
+            System.out.println(listOfLibrarians());
+
+        }
+        catch(SQLException e){
+
+            e.printStackTrace();
+
+        }
+
+    }
 }
