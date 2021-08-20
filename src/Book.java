@@ -3,6 +3,9 @@ public class Book {
     String title;
     String category;
     int availableNumber;
+    int id;
+
+    public Book(){};
 
     public Book(String _author, String _title, String _category, int _availableNumber){
         author = _author;

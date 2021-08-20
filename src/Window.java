@@ -344,6 +344,7 @@ public class Window {
         w.mainFrame.setTitle("Admin Options");
 
         JButton b1 = new JButton("Remove a librarian");
+        JButton b2 = new JButton("Add a new book");
 
         Librarian lib = new Librarian();
 
@@ -401,8 +402,75 @@ public class Window {
             }
         });
 
+        b2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                w.mainFrame.setVisible(false);
+
+                Book newBook = new Book();
+
+                f2.header.setText("Introdu informatiile despre carte: ");
+                JTextField title = new JTextField("type the title");
+                title.setBounds(50, 10, 200,20);
+                title.setPreferredSize(new Dimension(200,20));
+                title.setLocation(50, 10);
+
+                title.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        newBook.title = title.getText();
+                    }
+                });
+
+                JTextField author = new JTextField("type the author");
+                author.setBounds(50, 30, 200,20);
+                author.setPreferredSize(new Dimension(200,20));
+                author.setLocation(50, 30);
+
+                author.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        newBook.author = author.getText();
+                    }
+                });
+
+                JTextField category = new JTextField("type the category");
+                category.setBounds(50, 50, 200,20);
+                category.setPreferredSize(new Dimension(200,20));
+                category.setLocation(50, 50);
+
+                category.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        newBook.category = category.getText();
+                    }
+                });
+
+                JTextField nr = new JTextField("type the number");
+                nr.setBounds(50, 70, 200,20);
+                nr.setPreferredSize(new Dimension(200,20));
+                nr.setLocation(50, 70);
+
+                nr.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        newBook.availableNumber = Integer.parseInt(nr.getText());
+                        b.InsertBook(newBook);
+                    }
+                });
+
+                f2.mainPanel.setLayout(null);
+                f2.mainPanel.add(title);
+                f2.mainPanel.add(author);
+                f2.mainPanel.add(category);
+                f2.mainPanel.add(nr);
+                f2.mainFrame.setVisible(true);
+            }
+        });
+
 
         w.mainPanel.add(b1);
+        w.mainPanel.add(b2);
 
         w.mainFrame.setVisible(true);
     }

@@ -1,5 +1,6 @@
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class DataBase {
 
@@ -115,4 +116,43 @@ public class DataBase {
         }
 
     }
+
+    public void InsertBook(Book b){
+
+        String query = " insert into book (idbook, title, author, category, count)"
+                + " values (?, ?, ?, ?, ?)";
+
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/usersdb", "root", "Irina*Burada*10*");
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            Random rand = new Random();
+            int id = rand.nextInt(1000);
+
+            b.id = id;
+            stmt.setInt(1,b.id);
+            stmt.setString(2, b.title);
+            stmt.setString(3,b.author);
+            stmt.setString(4,b.category);
+            stmt.setInt(5,b.availableNumber);
+
+
+
+            stmt.executeUpdate();
+
+            System.out.println("inserted");
+            System.out.println(listOfBooks());
+            connection.close();
+
+
+
+        }
+        catch (Exception e)
+        {
+            System.err.println("Got an exception!");
+            System.err.println(e.getMessage());
+        }
+
+    }
+
+
 }

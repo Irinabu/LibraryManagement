@@ -14,13 +14,5 @@ public class Admin extends User{
     public String toString(){
         return (firstName + " " + lastName + " " );
     }
-    public void addLibrarian(){
-
-    }
-
-    public void removeLibrarian(){
-
-    }
-
 
 }
