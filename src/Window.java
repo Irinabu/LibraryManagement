@@ -9,7 +9,7 @@ public class Window {
     public JLabel header;
     public JPanel mainPanel;
     public JTextField email;
-    public JTextField password;
+    public JPasswordField password;
     public JTextField text;
 
 
@@ -23,21 +23,27 @@ public class Window {
     public void Login(Window w) {
 
         email = new JTextField("type your email");
-        email.setBounds(10, 10, 120, 20);
-        email.setLocation(50, 70);
+        email.setBounds(10, 10, 200, 20);
+        email.setLocation(30, 70);
+        email.setPreferredSize(new Dimension(200, 20));
 
-        password = new JTextField("type your password");
-        password.setBounds(10, 10, 120, 20);
-        password.setLocation(50, 110);
+        password = new JPasswordField("password");
+        password.setBounds(10, 10, 200, 20);
+        password.setLocation(30, 110);
+        password.setPreferredSize(new Dimension(200,20));
 
         mainFrame.setVisible(false);
 
         mainPanel = new JPanel();
         mainPanel.setLayout(null);
+
         mainFrame.add(mainPanel);
 
         mainPanel.add(email);
         mainPanel.add(password);
+
+
+
     }
 
     void LoginLibrarian(Window w){
@@ -195,12 +201,14 @@ public class Window {
             }
         });
 
-        w.mainPanel = new JPanel();
+        w.mainPanel = new JPanel(new GridLayout(3,1));
         w.mainPanel.setLayout(new FlowLayout());
 
 
         w.mainFrame.add(w.header);
+
         w.mainFrame.add(w.mainPanel);
+
         mainFrame.setVisible(false);
         w.mainFrame.setVisible(true);
 
@@ -227,6 +235,7 @@ public class Window {
 
                 prepareFrame(f1);
 
+                f1.mainFrame.setTitle("Loan");
                 f1.header.setText("Type the name of the book");
 
                 f1.text = new JTextField();
@@ -251,19 +260,19 @@ public class Window {
                                     foundB = true;
                                     l.get(i).availableNumber--;
                                     System.out.println(l.get(i));
-                                    JOptionPane.showMessageDialog(null, "Imprumut realizat cu succes");
+                                    JOptionPane.showMessageDialog(null, "Loan made successfully!");
                                     f1.mainFrame.setVisible(false);
                                     w.mainFrame.setVisible(true);
                                 }
                                 else
                                 {
-                                    JOptionPane.showMessageDialog(null, "Nu mai sunt carti disponibile");
+                                    JOptionPane.showMessageDialog(null, "There no books available!");
 
                                 }
 
                             }
                             else{
-                                JOptionPane.showMessageDialog(null, "Nume gresit sau carte inexistenta in sistem");
+                                JOptionPane.showMessageDialog(null, "Wrong name or unregistered book!");
                             }
                     }
                 });
@@ -278,6 +287,7 @@ public class Window {
 
                 prepareFrame(f1);
 
+                f1.mainFrame.setTitle("Return");
                 f1.header.setText("Type the name of the book");
 
                 f1.text = new JTextField();
@@ -302,14 +312,14 @@ public class Window {
                                     foundB = true;
                                     l.get(i).availableNumber++;
                                     System.out.println(l.get(i));
-                                    JOptionPane.showMessageDialog(null, "Returnare realizata cu succes");
+                                    JOptionPane.showMessageDialog(null, "Return made succesfully!");
                                     f1.mainFrame.setVisible(false);
                                     w.mainFrame.setVisible(true);
 
 
                             }
                             else{
-                                JOptionPane.showMessageDialog(null, "Nume gresit sau carte inexistenta in sistem");
+                                JOptionPane.showMessageDialog(null, "Wrong name or unregistered book!");
                             }
                     }
                 });
@@ -357,8 +367,9 @@ public class Window {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                w.mainFrame.setTitle("Add librarian");
                 w.mainFrame.setVisible(false);
-                f2.header.setText("Introdu datele: ");
+                f2.header.setText("Enter information about the librarian: ");
                 JTextField fname = new JTextField("type the first name");
                 fname.setBounds(50, 20, 200,20);
                 fname.setPreferredSize(new Dimension(200,20));
@@ -409,7 +420,8 @@ public class Window {
 
                 Book newBook = new Book();
 
-                f2.header.setText("Introdu informatiile despre carte: ");
+                f2.mainFrame.setTitle("Add a book");
+                f2.header.setText("Enter information about the book: ");
                 JTextField title = new JTextField("type the title");
                 title.setBounds(50, 10, 200,20);
                 title.setPreferredSize(new Dimension(200,20));
